@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VFlow Demo – Multi-Mitarbeiter Demo</title>
+
+  <style>
+    body { font-family: Arial, sans-serif; background:#0f172a; color:white; margin:0; padding:0; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; text-align:center; }
+    h1 { font-size:2rem; margin-bottom:10px; }
+    p { opacity:0.9; margin-bottom:40px; }
+    .whatsapp-sim { margin-top:20px; background:#25D366; color:white; padding:20px; border-radius:12px; text-align:left; max-width:500px; margin-left:auto; margin-right:auto; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:none; }
+    .whatsapp-sim h2 { font-size:1.1rem; margin-bottom:5px; }
+    .whatsapp-sim p { font-size:0.95rem; margin:2px 0; }
+    .whatsapp-sim .branche { font-style:italic; opacity:0.9; margin-bottom:10px; }
+    .branche-button { margin:5px; padding:8px 15px; background:#3b82f6; border:none; border-radius:8px; color:white; cursor:pointer; }
+    footer { margin-top:40px; font-size:0.9rem; opacity:0.6; }
+    #chatbot { position:fixed; bottom:20px; right:20px; background:#3b82f6; color:white; padding:15px 20px; border-radius:15px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>VFlow Demo – Multi-Mitarbeiter Demo</h1>
+  <p>Wählen Sie eine Branche, um die Buchung und Mitarbeiter-Benachrichtigung zu testen:</p>
+
+  <div>
+    <button class="branche-button" onclick="showWhatsApp('Friseur')">Friseur / Studio</button>
+    <button class="branche-button" onclick="showWhatsApp('Werkstatt')">Werkstatt / Auto</button>
+    <button class="branche-button" onclick="showWhatsApp('Praxis')">Praxis / Physiotherapie</button>
+  </div>
+
+  <!-- Calendly Inline-Widget Beginn -->
+  <div class="calendly-inline-widget" data-url="https://calendly.com/vflow-tec/kostenlose-5-minuten-demo-vflow-klon?hide_event_type_details=1&primary_color=00b440" style="min-width:320px;height:700px;"></div>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <!-- Calendly Inline-Widget Ende -->
+
+  <!-- WhatsApp Benachrichtigung simuliert für mehrere Mitarbeiter -->
+  <div class="whatsapp-sim" id="whatsappSim1">
+    <h2>📩 Neue Terminbuchung bei VFlow:</h2>
+    <p class="branche" id="brancheText1">Branche: Friseur</p>
+    <p><strong>Name:</strong> Anna Schmitt</p>
+    <p><strong>Firma:</strong> Salon Style</p>
+    <p><strong>Anliegen:</strong> Haarschnitt Termin buchen</p>
+    <p><strong>Datum & Uhrzeit:</strong> 05.01.2026, 15:30</p>
+    <p><strong>Link zum Kalender:</strong> <a href="#" style="color:white; text-decoration:underline;">Hier klicken</a></p>
+  </div>
+
+  <div class="whatsapp-sim" id="whatsappSim2">
+    <h2>📩 Neue Terminbuchung bei VFlow:</h2>
+    <p class="branche" id="brancheText2">Branche: Friseur</p>
+    <p><strong>Name:</strong> Lisa Bauer</p>
+    <p><strong>Firma:</strong> Salon Style</p>
+    <p><strong>Anliegen:</strong> Farbtermin buchen</p>
+    <p><strong>Datum & Uhrzeit:</strong> 05.01.2026, 16:00</p>
+    <p><strong>Link zum Kalender:</strong> <a href="#" style="color:white; text-decoration:underline;">Hier klicken</a></p>
+  </div>
+
+  <footer>© VFlow – Automatisierter Kundenkontakt</footer>
+</div>
+
+<!-- Mini Chatbot -->
+<div id="chatbot" onclick="document.getElementById('whatsappSim1').style.display='block'; document.getElementById('whatsappSim2').style.display='block';">💬 Termin buchen</div>
+
+<script>
+  function showWhatsApp(branche) {
+    // Mitarbeiter 1
+    let sim1 = document.getElementById('whatsappSim1');
+    sim1.style.display = 'block';
+    let name1 = '', firma1 = '', anliegen1 = '';
+
+    // Mitarbeiter 2
+    let sim2 = document.getElementById('whatsappSim2');
+    sim2.style.display = 'block';
+    let name2 = '', firma2 = '', anliegen2 = '';
+
+    if(branche === 'Friseur') {
+        name1 = 'Anna Schmitt'; firma1 = 'Salon Style'; anliegen1 = 'Haarschnitt Termin buchen';
+        name2 = 'Lisa Bauer'; firma2 = 'Salon Style'; anliegen2 = 'Farbtermin buchen';
+    } else if(branche === 'Werkstatt') {
+        name1 = 'Max Meier'; firma1 = 'AutoFix Werkstatt'; anliegen1 = 'Inspektion & Ölwechsel';
+        name2 = 'Tim Schneider'; firma2 = 'AutoFix Werkstatt'; anliegen2 = 'Reifenwechsel';
+    } else if(branche === 'Praxis') {
+        name1 = 'Lisa Müller'; firma1 = 'Physio Aktiv'; anliegen1 = 'Therapie Termin';
+        name2 = 'Paul Hoffmann'; firma2 = 'Physio Aktiv'; anliegen2 = 'Massage Termin';
+    }
+
+    document.getElementById('brancheText1').innerText = 'Branche: ' + branche;
+    sim1.querySelector('p:nth-of-type(2)').innerHTML = '<strong>Name:</strong> ' + name1;
+    sim1.querySelector('p:nth-of-type(3)').innerHTML = '<strong>Firma:</strong> ' + firma1;
+    sim1.querySelector('p:nth-of-type(4)').innerHTML = '<strong>Anliegen:</strong> ' + anliegen1;
+
+    document.getElementById('brancheText2').innerText = 'Branche: ' + branche;
+    sim2.querySelector('p:nth-of-type(2)').innerHTML = '<strong>Name:</strong> ' + name2;
+    sim2.querySelector('p:nth-of-type(3)').innerHTML = '<strong>Firma:</strong> ' + firma2;
+    sim2.querySelector('p:nth-of-type(4)').innerHTML = '<strong>Anliegen:</strong> ' + anliegen2;
+  }
+</script>
+
+</body>
+</html>
